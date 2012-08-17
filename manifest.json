@@ -1,0 +1,12 @@
+{
+  "name": "Eth0.se URL shortener",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "Shorten urls using http://eth0.se",
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "permissions": [
+    "http://app.eth0.se"
+  ]
+}
