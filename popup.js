@@ -37,9 +37,9 @@ function showUrl() {
 
     a.appendChild(document.createTextNode(url));
 
-    newStatus.appendChild(document.createTextNode("The short url has been copied to your clipboard."));
+    newStatus.appendChild(document.createTextNode("The short url has been copied to your clipboard. "));
 
-    if (isMac) {
+    if (isMac === true) {
       newStatus.appendChild(document.createTextNode("Use ⌘ + V to paste it somewhere. "))
     } else {
       newStatus.appendChild(document.createTextNode("Use CTRL + V to paste it somewhere. "))
