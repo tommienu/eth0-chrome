@@ -7,7 +7,7 @@ var tabId;
 chrome.tabs.getSelected(null, function(tab) {
   var tabUrl = tab.url;
   var tabId = tab.id;
-  
+
   req.open(
       "GET",
       "http://eth0.se/new.xml?href="+tabUrl,
@@ -19,12 +19,14 @@ chrome.tabs.getSelected(null, function(tab) {
 
 function showUrl() {
 
+  //buffer output elements, we show something regardless of service-response.
+  var newStatus = document.createElement("p");
+  newStatus.id = "status";
+
+  //remove any old messages
+  removeStatus();
+
   if (req.status == 200) {
-    removeStatus();
-
-    var newStatus = document.createElement("p");
-    newStatus.id = "status";
-
     var a = document.createElement("a");
     a.id = "shortUrl";
 
@@ -35,7 +37,7 @@ function showUrl() {
 
     a.appendChild(document.createTextNode(url));
 
-    newStatus.appendChild(document.createTextNode("The short url has been copied to your clipboard. "));
+    newStatus.appendChild(document.createTextNode("The short url has been copied to your clipboard."));
 
     if (isMac) {
       newStatus.appendChild(document.createTextNode("Use ⌘ + V to paste it somewhere. "))
@@ -45,12 +47,23 @@ function showUrl() {
 
     newStatus.appendChild(a);
 
-    document.body.appendChild(newStatus);
-
     copyToClipboard(url);
 
     chrome.tabs.update(tabId, {url:url});
+  } else {
+    //error trapping
+    switch (req.status) {
+      case 400:
+        newStatus.appendChild(document.createTextNode("There was a problem with the href parameter. Are you sure you're trying to shorten a proper URL?"));
+        break;
+      default:
+        newStatus.appendChild(document.createTextNode("Unknown error occured, please try again later."));
+        break;
+    }
   }
+
+  //append output
+  document.body.appendChild(newStatus);
   
 }
 
