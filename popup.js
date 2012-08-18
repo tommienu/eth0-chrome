@@ -7,7 +7,7 @@ var tabId;
 chrome.tabs.getSelected(null, function(tab) {
   var tabUrl = tab.url;
   var tabId = tab.id;
-
+  
   req.open(
       "GET",
       "http://eth0.se/new.xml?href="+tabUrl,
