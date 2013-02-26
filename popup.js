@@ -48,8 +48,6 @@ function showUrl() {
     newStatus.appendChild(a);
 
     copyToClipboard(url);
-
-    chrome.tabs.update(tabId, {url:url});
   } else {
     //error trapping
     switch (req.status) {
